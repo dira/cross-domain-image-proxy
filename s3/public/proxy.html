@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>S3 proxy</title>
+    <script src='/proxy.js' type='text/javascript'></script>
+  </head>
+  <body>
+    <script type='text/javascript'>
+      //<![CDATA[
+        window.onload = function() {
+          new Proxy.ImageLoader(parent, "http://application.dev")
+        }
+      //]]>
+    </script>
+  </body>
+</html>

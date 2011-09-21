@@ -1,0 +1,7 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+guard 'haml',  :input => 'src', :output => 'public' do
+  watch %r{^src/.+(\.html\.haml)}
+end
+guard 'coffeescript', :input => 'src/coffeescript', :output => 'public', :bare => true

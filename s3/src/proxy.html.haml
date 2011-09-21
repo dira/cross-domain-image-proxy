@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+%html{ :lang => "en" }
+  %head
+    %meta{ :charset => 'utf-8' }
+    %title S3 proxy
+
+    %script{ :src => "/proxy.js", :type => "text/javascript" }
+  %body
+    :javascript
+      window.onload = function() {
+        new Proxy.ImageLoader(parent, "http://application.dev")
+      }

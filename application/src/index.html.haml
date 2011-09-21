@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+%html{ :lang => "en" }
+  %head
+    %meta{ :charset => 'utf-8' }
+    %title postMessage cross domain communication demo - the web app
+
+    %link{ :rel => 'stylesheet', :href => 'http://html5resetcss.googlecode.com/files/html5reset-1.6.1.css', :media => 'screen' }
+    %link{ :rel => 'stylesheet', :href => '/css/style.css', :media => 'screen' }
+
+    %script{ :src => "javascript/vendor/zepto.js", :type => "text/javascript" }
+    %script{ :src => "javascript/application.js", :type => "text/javascript" }
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  %body
+    %header
+      %h1 This application is hosted on application.dev
+
+    %p It loads 3 images from another domain under my control, s3.dev ...
+    %ul#images
+      %li
+        %img{ "data-url" => '/images/5-5.png' }
+      %li
+        %img{ "data-url" => '/images/6-5.png' }
+      %li
+        %img{ "data-url" => '/images/7-5.png' }
+
+
+    %p ... stiches them in a canvas ...
+    %canvas#main{ :width => '300', :height => '100' }
+
+    %p
+      \... and manipulates the existing pixels. Without a Browser Security Error. Thanks to postMessage.
+
+      %a{ :href => '' } see how
+
+    #proof
+      %p Here is canvas.toDataURL():
+      %textarea#proof_text
+
+      %p And the contents of the canvas dumped in an image:
+      %img#proof_image
+
+    %footer
+      %p
+        Images fom
+        %a{ :href => 'http://tzigla.com/boards/1' } quack, quack, pixel duck - a collaborative drawing on Tzigla
+
+    %iframe#proxy{ "data-remote-domain" => "http://s3.dev", :width => 0, :height => 0, :style => "display:none" }
