@@ -1,0 +1,33 @@
+ul {
+  margin: 0;
+  padding: 2px;
+  height: 100px;
+}
+#images li {
+  display: inline;
+  margin-right: 10px;
+}
+
+canvas {
+  display: block;
+  padding: 2px;
+  border: 1px solid #aaa;
+}
+
+#proof {
+  margin-top: 40px;
+}
+
+#proof_text {
+  display: block;
+  width: 320px;
+  height: 170px;
+  padding: 5px;
+  background-color:#eea;
+  border: 1px solid #aaa;
+}
+
+footer {
+  margin-top: 40px;
+  color: #333;
+}
