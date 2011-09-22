@@ -12,12 +12,12 @@ Application =
       $("#images img").each (e) =>
         @proxy.send_message
           action: 'load',
-          url: e.getAttribute('data-url')
+          path: e.getAttribute('data-path')
 
 
-    on_load: (url, bits) =>
+    on_load: (path, bits) =>
       $("#images img").each (el, index) =>
-        if el.getAttribute('data-url') == url
+        if el.getAttribute('data-path') == path
           el.onload = () =>
             @canvas.getContext('2d').drawImage(el, 100 * index, 0)
 
@@ -38,12 +38,14 @@ Application =
 
     load_proxy: ->
       @proxy_element = $('#proxy').dom[0]
-      @remote_domain = @proxy_element.getAttribute('data-remote-domain')
+
+      proxy_url = @proxy_element.getAttribute('data-proxy-url')
+      @remote_domain = proxy_url.match(/http:\/\/[^/]+/)[0]
 
       # add a timestamp to avoid some browsers taking the file from cache
       # and not executing the JS
       stamp = (Math.random() + "").substr(-10)
-      @proxy_element.src = "#{@remote_domain}/proxy.html?stamp=#{stamp}"
+      @proxy_element.src = "#{proxy_url}?stamp=#{stamp}"
 
 
     loaded: ->
@@ -57,7 +59,7 @@ Application =
       switch data.action
         when 'init' then @proxy = event.source
         when 'loaded'
-          @on_load(data.url, data.bits)
+          @on_load(data.path, data.bits)
 
 
     send_message: (message) ->

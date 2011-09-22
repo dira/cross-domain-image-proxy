@@ -14,13 +14,13 @@ Application = {
       $("#images img").each(__bind(function(e) {
         return this.proxy.send_message({
           action: 'load',
-          url: e.getAttribute('data-url')
+          path: e.getAttribute('data-path')
         });
       }, this));
     }
-    _Class.prototype.on_load = function(url, bits) {
+    _Class.prototype.on_load = function(path, bits) {
       return $("#images img").each(__bind(function(el, index) {
-        if (el.getAttribute('data-url') === url) {
+        if (el.getAttribute('data-path') === path) {
           el.onload = __bind(function() {
             var contents;
             this.canvas.getContext('2d').drawImage(el, 100 * index, 0);
@@ -42,11 +42,12 @@ Application = {
       this.load_proxy();
     }
     _Class.prototype.load_proxy = function() {
-      var stamp;
+      var proxy_url, stamp;
       this.proxy_element = $('#proxy').dom[0];
-      this.remote_domain = this.proxy_element.getAttribute('data-remote-domain');
+      proxy_url = this.proxy_element.getAttribute('data-proxy-url');
+      this.remote_domain = proxy_url.match(/http:\/\/[^/]+/)[0];
       stamp = (Math.random() + "").substr(-10);
-      return this.proxy_element.src = "" + this.remote_domain + "/proxy.html?stamp=" + stamp;
+      return this.proxy_element.src = "" + proxy_url + "?stamp=" + stamp;
     };
     _Class.prototype.loaded = function() {
       return !!this.proxy;
@@ -61,7 +62,7 @@ Application = {
         case 'init':
           return this.proxy = event.source;
         case 'loaded':
-          return this.on_load(data.url, data.bits);
+          return this.on_load(data.path, data.bits);
       }
     };
     _Class.prototype.send_message = function(message) {

@@ -4,9 +4,11 @@
     %meta{ :charset => 'utf-8' }
     %title S3 proxy
 
-    %script{ :src => "/proxy.js", :type => "text/javascript" }
+    %script{ :src => "proxy.js", :type => "text/javascript" }
   %body
     :javascript
       window.onload = function() {
-        new Proxy.ImageLoader(parent, "http://application.dev")
+        new Proxy.ImageLoader(parent,
+          "http://application.dev" // TODO replace with your application's domain
+        )
       }

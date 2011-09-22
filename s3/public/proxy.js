@@ -19,32 +19,32 @@ Proxy = {
       }
       data = JSON.parse(event.data);
       if (data.action === 'load') {
-        return this.load_image(data.url);
+        return this.load_image(data.path);
       }
     };
     _Class.prototype.send_message = function(message) {
       return this.end_point.postMessage(JSON.stringify(message), this.expected_domain);
     };
-    _Class.prototype.load_image = function(url) {
+    _Class.prototype.load_image = function(path) {
       var image;
       image = document.createElement('img');
-      image.setAttribute('data-url', url);
+      image.setAttribute('data-path', path);
       image.onload = image.onerror = image.onabort = this.loaded;
-      image.src = url;
+      image.src = path;
       return document.body.appendChild(image);
     };
     _Class.prototype.loaded = function(e) {
-      var bits, canvas, image, url;
+      var bits, canvas, image, path;
       image = e.target;
       canvas = document.createElement('canvas');
       canvas.width = image.width;
       canvas.height = image.height;
       canvas.getContext('2d').drawImage(image, 0, 0);
       bits = canvas.toDataURL();
-      url = image.getAttribute('data-url');
+      path = image.getAttribute('data-path');
       return this.send_message({
         action: 'loaded',
-        url: url,
+        path: path,
         bits: bits
       });
     };

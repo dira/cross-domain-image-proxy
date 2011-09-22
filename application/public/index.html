@@ -4,7 +4,7 @@
     <meta charset='utf-8' />
     <title>postMessage cross domain communication demo - the web app</title>
     <link href='http://html5resetcss.googlecode.com/files/html5reset-1.6.1.css' media='screen' rel='stylesheet' />
-    <link href='/css/style.css' media='screen' rel='stylesheet' />
+    <link href='css/style.css' media='screen' rel='stylesheet' />
     <script src='javascript/vendor/zepto.js' type='text/javascript'></script>
     <script src='javascript/application.js' type='text/javascript'></script>
     <!--[if lt IE 9]>
@@ -13,30 +13,50 @@
   </head>
   <body>
     <header>
-      <h1>This application is hosted on application.dev</h1>
+      <h1>This is a web application</h1>
     </header>
-    <p>It loads 3 images from another domain under my control, s3.dev ...</p>
-    <ul id='images'>
+    <ol>
       <li>
-        <img data-url='/images/5-5.png' />
+        <p>It loads 3 images from another domain under my control</p>
+        <ul id='images'>
+          <li>
+            <img data-path='images/5-5.png' />
+          </li>
+          <l>
+            <img data-path='images/6-5.png' />
+          </l>
+          <li>
+            <img data-path='images/7-5.png' />
+          </li>
+        </ul>
       </li>
       <li>
-        <img data-url='/images/6-5.png' />
+        <p>Stiches them in a canvas</p>
+        <canvas height='100' id='main' width='300'></canvas>
       </li>
       <li>
-        <img data-url='/images/7-5.png' />
+        <p>
+          Manipulates the existing pixels
+        </p>
       </li>
-    </ul>
-    <p>... stiches them in a canvas ...</p>
-    <canvas height='100' id='main' width='300'></canvas>
-    <p>
-      ... and manipulates the existing pixels. Without a Browser Security Error. Thanks to postMessage.
-      <a href=''>see how</a>
-    </p>
+      <li>
+        <p>
+          And calls
+          <code>canvas.toDataUrl</code>
+          without a Browser Security Error.
+          <a href=''>Read this blog post to see how</a>
+        </p>
+      </li>
+    </ol>
     <div id='proof'>
-      <p>Here is canvas.toDataURL():</p>
+      Here is
+      <code>canvas.toDataUrl</code>
       <textarea id='proof_text'></textarea>
-      <p>And the contents of the canvas dumped in an image:</p>
+      <p>
+        And
+        <code>canvas.toDataUrl</code>
+        dumped in yet another image.
+      </p>
       <img id='proof_image' />
     </div>
     <footer>
@@ -45,6 +65,6 @@
         <a href='http://tzigla.com/boards/1'>quack, quack, pixel duck - a collaborative drawing on Tzigla</a>
       </p>
     </footer>
-    <iframe data-remote-domain='http://s3.dev' height='0' id='proxy' style='display:none' width='0'></iframe>
+    <iframe data-proxy-url='http://dira.dev/code/remote-storage/proxy.html' height='0' id='proxy' style='display:none' width='0'></iframe>
   </body>
 </html>
