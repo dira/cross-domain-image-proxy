@@ -1,22 +1,32 @@
 Proxy =
-  ImageLoader: class
-    constructor: (end_point, expected_domain) ->
-      @end_point = end_point
-      @expected_domain = expected_domain
+  Proxy: class
+    constructor: (args) ->
+      @end_point       = args.end_point
+      @expected_domain = args.from
+      @worker          = new args.worker_class(this)
 
-      window.addEventListener 'message', @receive_message, false
-      @send_message action: 'init'
-
-
-    receive_message: (event) =>
-      return  if event.origin != @expected_domain
-
-      data = JSON.parse(event.data)
-      @load_image(data.path) if data.action == 'load'
+      window.addEventListener 'message', @message_received, false
+      @send action: 'init'
 
 
-    send_message: (message) =>
+    message_received: (event) =>
+      return if event.origin != @expected_domain
+
+      @worker.execute JSON.parse(event.data)
+
+
+    send: (message) =>
       @end_point.postMessage JSON.stringify(message), @expected_domain
+
+
+  ImageLoader: class
+    constructor: (proxy) ->
+      @proxy = proxy
+
+
+    execute: (message) ->
+      switch message.action
+        when 'load' then @load_image message.path
 
 
     load_image: (path) ->
@@ -36,7 +46,7 @@ Proxy =
 
       bits = canvas.toDataURL()
       path = image.getAttribute('data-path')
-      @send_message
+      @proxy.send
         action: 'loaded'
         path: path
         bits: bits

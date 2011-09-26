@@ -1,29 +1,37 @@
 var Proxy;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Proxy = {
-  ImageLoader: (function() {
-    function _Class(end_point, expected_domain) {
-      this.loaded = __bind(this.loaded, this);
-      this.send_message = __bind(this.send_message, this);
-      this.receive_message = __bind(this.receive_message, this);      this.end_point = end_point;
-      this.expected_domain = expected_domain;
-      window.addEventListener('message', this.receive_message, false);
-      this.send_message({
+  Proxy: (function() {
+    function _Class(args) {
+      this.send = __bind(this.send, this);
+      this.message_received = __bind(this.message_received, this);      this.end_point = args.end_point;
+      this.expected_domain = args.from;
+      this.worker = new args.worker_class(this);
+      window.addEventListener('message', this.message_received, false);
+      this.send({
         action: 'init'
       });
     }
-    _Class.prototype.receive_message = function(event) {
-      var data;
+    _Class.prototype.message_received = function(event) {
       if (event.origin !== this.expected_domain) {
         return;
       }
-      data = JSON.parse(event.data);
-      if (data.action === 'load') {
-        return this.load_image(data.path);
-      }
+      return this.worker.execute(JSON.parse(event.data));
     };
-    _Class.prototype.send_message = function(message) {
+    _Class.prototype.send = function(message) {
       return this.end_point.postMessage(JSON.stringify(message), this.expected_domain);
+    };
+    return _Class;
+  })(),
+  ImageLoader: (function() {
+    function _Class(proxy) {
+      this.loaded = __bind(this.loaded, this);      this.proxy = proxy;
+    }
+    _Class.prototype.execute = function(message) {
+      switch (message.action) {
+        case 'load':
+          return this.load_image(message.path);
+      }
     };
     _Class.prototype.load_image = function(path) {
       var image;
@@ -42,7 +50,7 @@ Proxy = {
       canvas.getContext('2d').drawImage(image, 0, 0);
       bits = canvas.toDataURL();
       path = image.getAttribute('data-path');
-      return this.send_message({
+      return this.proxy.send({
         action: 'loaded',
         path: path,
         bits: bits

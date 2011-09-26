@@ -8,7 +8,9 @@
   %body
     :javascript
       window.onload = function() {
-        new Proxy.ImageLoader(parent,
-          "http://application.dev" // TODO replace with your application's domain
-        )
+        new Proxy.Proxy ({
+          end_point:    parent,
+          from:         "http://application.dev", // TODO your application's domain
+          worker_class: Proxy.ImageLoader
+        })
       }
