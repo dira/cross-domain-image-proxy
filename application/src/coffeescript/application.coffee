@@ -3,7 +3,7 @@ Application.Main = class
   constructor: ->
     @proxy = new Application.Proxy
       # url: 'http://dira.dev/code/remote-storage/proxy.html',
-      url:         'http://s3.dev/proxy.html' # TODO your application's domain
+      url:         'http://s3-clone.heroku.com/proxy.html' # TODO your application's domain
       application: this
 
     @images =      document.getElementById('images').getElementsByTagName('img')
