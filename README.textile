@@ -1,14 +1,5 @@
 h2. Demo: S3 & canvas & no Security Error
 
-This is a demo app for "blog post":http://dira.ro
+This is the code for solving the Security Error issued by browsers when loading images from another domain in a @canvas@ and accessing its pixels.
 
-h2. You can use the code
-
-See the source directories for the "application":https://github.com/dira/cross-domain-image-proxy/tree/master/application/src and for the "image hosting domain":https://github.com/dira/cross-domain-image-proxy/tree/master/s3/src
-
-h2. Install it on your machine
-
-* clone the repository
-* have a web server deliver @application/public@ under the URL @http://application.dev@ (I use "pow":http://pow.cx/)
-* have a web server deliver @s3/public@ under the URL @http://s3.dev@ (I use "pow":http://pow.cx/)
-* open "http://application.dev":http://application.dev
+You can "see it working":http://dira.ro/code/post-message-demo/ and "read more about the problem and the solution":http://dira.ro/2011/10/17/heroku-s3-canvas-and-the-security-error-of-doom
