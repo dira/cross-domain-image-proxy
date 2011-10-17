@@ -2,4 +2,6 @@ h2. Demo: S3 & canvas & no Security Error
 
 This is the code for solving the Security Error issued by browsers when loading images from another domain in a @canvas@ and accessing its pixels.
 
-You can "see it working":http://dira.ro/code/post-message-demo/ and "read more about the problem and the solution":http://dira.ro/2011/10/17/heroku-s3-canvas-and-the-security-error-of-doom
+The @application@ folder should be integrated in your application, and the @s3@ folder on the remote domain on which you keep your images.
+
+You can "see it working":http://dira.ro/code/post-message-demo/ and "read more about the problem and the solution":http://dira.ro/2011/10/17/heroku-s3-canvas-and-the-security-error-of-doom.
